@@ -80,4 +80,4 @@ theme: landscape
 deploy:
   type: git
   repo: https://github.com/bennyn/bennyn.github.io.git
-  branch: gh-pages
+  branch: master
