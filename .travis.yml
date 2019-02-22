@@ -9,8 +9,12 @@ git:
 script:
   - npx hexo clean
   - npx hexo generate
-after_success:
-  - sed -i'' "s~https://github.com/bennyn/bennyn.github.io.git~https://${GH_TOKEN}@github.com/bennyn/bennyn.github.io.git~" _config.yml
-  - npx hexo deploy
+deploy:
+  provider: script
+  script:
+    - sed -i'' "s~https://github.com/bennyn/bennyn.github.io.git~https://${GH_TOKEN}@github.com/bennyn/bennyn.github.io.git~" _config.yml
+    - npx hexo deploy
+  on:
+    branch: source
 notifications:
   email: false
