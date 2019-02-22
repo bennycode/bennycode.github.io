@@ -6,5 +6,8 @@ script:
   - npx hexo clean
   - npx hexo generate
 
+after_success:
+  - npx hexo deploy
+
 notifications:
   email: false
