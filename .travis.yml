@@ -11,12 +11,7 @@ script:
   - npx hexo generate
 deploy:
   - provider: script
-    script: echo 'Hello'
-    on:
-      branch: source
-  - provider: script
-    skip_cleanup: true
-    script: echo 'World'
+    script: bash scripts/deploy.sh
     on:
       branch: source
 notifications:
