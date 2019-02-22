@@ -11,12 +11,12 @@ script:
   - npx hexo generate
 deploy:
   - provider: script
-    script: sed -i'' "s~https://github.com/bennyn/bennyn.github.io.git~https://${GH_TOKEN}@github.com/bennyn/bennyn.github.io.git~" _config.yml
+    script: echo 'Hello'
     on:
       branch: source
   - provider: script
     skip_cleanup: true
-    script: npx hexo deploy
+    script: echo 'World'
     on:
       branch: source
 notifications:
