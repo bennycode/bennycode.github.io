@@ -11,7 +11,11 @@ script:
   - npx hexo generate
 deploy:
   - provider: script
-    script: bash scripts/deploy.sh
+    script: sed -i'' "s~https://github.com/bennyn/bennyn.github.io.git~https://${GH_TOKEN}@github.com/bennyn/bennyn.github.io.git~" _config.yml
+    on:
+      branch: source
+  - provider: script
+    script: npx hexo deploy
     on:
       branch: source
 notifications:
