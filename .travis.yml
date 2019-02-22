@@ -1,13 +1,15 @@
+env:
+  global:
+    secure: NZgNLXt0sxATEDTEyE+p8e659C2DN5DZ7OPs/PFa5B5ruX4ttaOcBuRbfSl1b0rgETGBrB7FdRO6JBj++1ehGpx+EcaKyMtNA39zrEvZbrdWzKExCwofXHmffz8u9C8K7xvQu5jEy1Bf8AeJWRYTY0MILpiAVAVbJRh6pIlJHx7U3V8RCDdn7ReGTY0MsJpzHj4xCZWhesWI7D4x8vxKYXDFIsoRrOKtF5cX6eCNsOIBm3BrDAKdEJXpK66tKOvnv4IR2oZQlYT1LnzuPxeKEILwhEjMv9HikPdlRK3VtoXksewnHXX1pcjMi8Hx7exjKAElYXzkIugAHecOUZk7/Nttj3fRdIhlmEbHLA1iXB2z8xxujzPRaLaacx9DiBOj14LgrO3Z5Hf4nVwVWiwUZRI/WIGz0yH9XV0MKWGKwjOlo9a29YQJ5lHBhqCfcdpnOJfbavYQ4jVktXBPDpYlD+qE/wfkYxAbX1FVWzMvLFKeU4gNJuvM1t6Q6O2UTi8tTveEA5DqNeBTrJHalrSaQPLbAEZBq+TWzdnjCwwoilkvlNu7R9ZqxZ2zpbDRL8HRecJceD6z6+tFO333GObRn5s5gVk7V7Ipzn4W8ys2mb0NMi817HYeOkjO21iQCtGUSCFU8W41FpURG0unqUXLrrR59c/hkHNjNpOaRX/aLBc=
 language: node_js
 node_js:
   - '10'
-
+git:
+  submodules: false
 script:
   - npx hexo clean
   - npx hexo generate
-
 after_success:
   - npx hexo deploy
-
 notifications:
   email: false

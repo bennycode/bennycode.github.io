@@ -79,5 +79,5 @@ theme: landscape
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/bennyn/bennyn.github.io.git
+  repo: https://${GH_TOKEN}@github.com/bennyn/bennyn.github.io.git
   branch: master
