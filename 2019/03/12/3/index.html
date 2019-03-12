@@ -11,11 +11,11 @@
 <meta name="keywords" content="packages,nodejs,args,argv,cli,tools,libraries">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Parse command line arguments in Node.js">
-<meta property="og:url" content="https://benny.work/2019/02/20/3/index.html">
+<meta property="og:url" content="https://benny.work/2019/03/12/3/index.html">
 <meta property="og:site_name" content="Benny&#39;s Blog">
 <meta property="og:description" content="There are many libraries to build CLI tools for Node.js like optimist, minimist, yargs and commander to name just a few. My favorite one is commander because it comes with TypeScript definitions: comm">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-10T18:40:30.777Z">
+<meta property="og:updated_time" content="2019-03-12T15:32:38.919Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Parse command line arguments in Node.js">
 <meta name="twitter:description" content="There are many libraries to build CLI tools for Node.js like optimist, minimist, yargs and commander to name just a few. My favorite one is commander because it comes with TypeScript definitions: comm">
@@ -67,8 +67,8 @@
       <div class="outer">
         <section id="main"><article id="post-3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/02/20/3/" class="article-date">
-  <time datetime="2019-02-20T11:03:25.000Z" itemprop="datePublished">2019-02-20</time>
+    <a href="/2019/03/12/3/" class="article-date">
+  <time datetime="2019-03-12T15:28:03.000Z" itemprop="datePublished">2019-03-12</time>
 </a>
     
   <div class="article-category">
@@ -95,6 +95,9 @@
 <p>My favorite one is <a href="https://github.com/tj/commander.js" target="_blank" rel="noopener">commander</a> because it comes with TypeScript definitions:</p>
 <p><strong>commander-example.ts</strong></p>
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#!<span class="regexp">/usr/</span>bin/env node</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> program <span class="keyword">from</span> <span class="string">'commander'</span>;</span><br><span class="line"><span class="keyword">import</span> pkg <span class="keyword">from</span> <span class="string">'../package.json'</span>;</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .description(pkg.description)</span><br><span class="line">  .name(<span class="built_in">Object</span>.values&lt;<span class="built_in">string</span>&gt;(pkg.bin)[<span class="number">0</span>])</span><br><span class="line">  .option(<span class="string">'-p, --pizza &lt;pizza type&gt;'</span>, <span class="string">'Your favorite kind of pizza'</span>, <span class="string">'Default Pizza'</span>)</span><br><span class="line">  .option(<span class="string">'-b, --bbq-sauce'</span>, <span class="string">'Add bbq sauce'</span>)</span><br><span class="line">  .option(<span class="string">'-c, --cheese [optinal]'</span>, <span class="string">'Add the specified type of cheese [marble]'</span>, <span class="string">'marble'</span>)</span><br><span class="line">  .version(pkg.version)</span><br><span class="line">  .parse(process.argv);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Pizza'</span>, program.pizza);</span><br></pre></td></tr></table></figure>
+<p>Should you just care about getting arguments in an easy way, you will be good with <a href="https://github.com/substack/minimist" target="_blank" rel="noopener">minimist</a>:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> minimist <span class="keyword">from</span> <span class="string">'minimist'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> argv = minimist(process.argv.slice(<span class="number">1</span>));</span><br><span class="line"><span class="built_in">console</span>.log(argv.mySpecialFlag);</span><br></pre></td></tr></table></figure>
+<p><strong>Extras</strong></p>
 <p>If you want to equip your program with some kind of configuration file (à la <code>webpack.config.js</code> or <code>.babelrc</code>) I can recommend <a href="https://github.com/davidtheclark/cosmiconfig" target="_blank" rel="noopener">cosmiconfig</a> to you. Cosmiconfig searches for and loads configuration files with the extensions <code>.json</code>, <code>.yaml</code>, <code>.yml</code>, or <code>.js</code>.</p>
 <p>And if you need pattern matching you will probably fall in love with <a href="https://github.com/isaacs/node-glob" target="_blank" rel="noopener">Globs</a>.</p>
 <p>If you need an interactive command line user interface with prompts, try <a href="https://github.com/SBoudrias/Inquirer.js" target="_blank" rel="noopener">Inquirer.js</a>.</p>
@@ -103,7 +106,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/02/20/3/" data-id="cjt5xiehy000g989oowzfe4d5" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/03/12/3/" data-id="cjt5xv0ib0003qk9oj5733sgo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/args/">args</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/argv/">argv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cli/">cli</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libraries/">libraries</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -114,19 +117,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/02/20/2/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Add a window property with TypeScript
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/02/19/1/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/02/20/2/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Setup electron-mocha with @babel/register and TypeScript</div>
+      <div class="article-nav-title">Add a window property with TypeScript</div>
     </a>
   
 </nav>
@@ -171,7 +165,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
     </div>
   </div>
 
@@ -184,11 +178,11 @@
       <ul>
         
           <li>
-            <a href="/2019/02/20/2/">Add a window property with TypeScript</a>
+            <a href="/2019/03/12/3/">Parse command line arguments in Node.js</a>
           </li>
         
           <li>
-            <a href="/2019/02/20/3/">Parse command line arguments in Node.js</a>
+            <a href="/2019/02/20/2/">Add a window property with TypeScript</a>
           </li>
         
           <li>
