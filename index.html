@@ -100,10 +100,60 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/02/20/2/" data-id="cjsermfs80001sctiz1snexd5" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/02/20/2/" data-id="cjt5xieh90000989omqfxocer" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coverage/">coverage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/namespace/">namespace</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/window/">window</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/20/3/" class="article-date">
+  <time datetime="2019-02-20T11:03:25.000Z" itemprop="datePublished">2019-02-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Node-js/">Node.js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/20/3/">Parse command line arguments in Node.js</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>There are many libraries to build CLI tools for Node.js like <a href="https://github.com/substack/node-optimist" target="_blank" rel="noopener">optimist</a>, <a href="https://github.com/substack/minimist" target="_blank" rel="noopener">minimist</a>, <a href="https://github.com/yargs/yargs" target="_blank" rel="noopener">yargs</a> and <a href="https://github.com/tj/commander.js" target="_blank" rel="noopener">commander</a> to name just a few.</p>
+<p>My favorite one is <a href="https://github.com/tj/commander.js" target="_blank" rel="noopener">commander</a> because it comes with TypeScript definitions:</p>
+<p><strong>commander-example.ts</strong></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#!<span class="regexp">/usr/</span>bin/env node</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> program <span class="keyword">from</span> <span class="string">'commander'</span>;</span><br><span class="line"><span class="keyword">import</span> pkg <span class="keyword">from</span> <span class="string">'../package.json'</span>;</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .description(pkg.description)</span><br><span class="line">  .name(<span class="built_in">Object</span>.values&lt;<span class="built_in">string</span>&gt;(pkg.bin)[<span class="number">0</span>])</span><br><span class="line">  .option(<span class="string">'-p, --pizza &lt;pizza type&gt;'</span>, <span class="string">'Your favorite kind of pizza'</span>, <span class="string">'Default Pizza'</span>)</span><br><span class="line">  .option(<span class="string">'-b, --bbq-sauce'</span>, <span class="string">'Add bbq sauce'</span>)</span><br><span class="line">  .option(<span class="string">'-c, --cheese [optinal]'</span>, <span class="string">'Add the specified type of cheese [marble]'</span>, <span class="string">'marble'</span>)</span><br><span class="line">  .version(pkg.version)</span><br><span class="line">  .parse(process.argv);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Pizza'</span>, program.pizza);</span><br></pre></td></tr></table></figure>
+<p>If you want to equip your program with some kind of configuration file (à la <code>webpack.config.js</code> or <code>.babelrc</code>) I can recommend <a href="https://github.com/davidtheclark/cosmiconfig" target="_blank" rel="noopener">cosmiconfig</a> to you. Cosmiconfig searches for and loads configuration files with the extensions <code>.json</code>, <code>.yaml</code>, <code>.yml</code>, or <code>.js</code>.</p>
+<p>And if you need pattern matching you will probably fall in love with <a href="https://github.com/isaacs/node-glob" target="_blank" rel="noopener">Globs</a>.</p>
+<p>If you need an interactive command line user interface with prompts, try <a href="https://github.com/SBoudrias/Inquirer.js" target="_blank" rel="noopener">Inquirer.js</a>.</p>
+<p>And for more colorful log messages on the terminal, there is <a href="https://github.com/chalk/chalk" target="_blank" rel="noopener">chalk</a>.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://benny.work/2019/02/20/3/" data-id="cjt5xiehy000g989oowzfe4d5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/args/">args</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/argv/">argv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cli/">cli</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libraries/">libraries</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
 
     </footer>
   </div>
@@ -164,7 +214,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/02/19/1/" data-id="cjsermfrz0000sctiwxy1vr6w" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/02/19/1/" data-id="cjt5xiehx000f989o361z1j2q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel/">babel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocha/">mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tsc/">tsc</a></li></ul>
@@ -186,7 +236,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/">Testing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/Unit-Testing/">Unit Testing</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/">TypeScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/Setup/">Setup</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/">Testing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/Unit-Testing/">Unit Testing</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/">TypeScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/Setup/">Setup</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -196,7 +246,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel/">babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coverage/">coverage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mocha/">mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/namespace/">namespace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/packages/">packages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tsc/">tsc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/window/">window</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/args/">args</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/argv/">argv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel/">babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cli/">cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coverage/">coverage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libraries/">libraries</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mocha/">mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/namespace/">namespace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/packages/">packages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tsc/">tsc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/window/">window</a></li></ul>
     </div>
   </div>
 
@@ -206,7 +256,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/TS2339/" style="font-size: 10px;">TS2339</a> <a href="/tags/TypeScript/" style="font-size: 20px;">TypeScript</a> <a href="/tags/babel/" style="font-size: 10px;">babel</a> <a href="/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/tags/electron-mocha/" style="font-size: 10px;">electron-mocha</a> <a href="/tags/istanbul/" style="font-size: 10px;">istanbul</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/namespace/" style="font-size: 10px;">namespace</a> <a href="/tags/packages/" style="font-size: 10px;">packages</a> <a href="/tags/preset-typescript/" style="font-size: 10px;">preset-typescript</a> <a href="/tags/tsc/" style="font-size: 10px;">tsc</a> <a href="/tags/window/" style="font-size: 10px;">window</a>
+      <a href="/tags/TS2339/" style="font-size: 10px;">TS2339</a> <a href="/tags/TypeScript/" style="font-size: 20px;">TypeScript</a> <a href="/tags/args/" style="font-size: 10px;">args</a> <a href="/tags/argv/" style="font-size: 10px;">argv</a> <a href="/tags/babel/" style="font-size: 10px;">babel</a> <a href="/tags/cli/" style="font-size: 10px;">cli</a> <a href="/tags/coverage/" style="font-size: 10px;">coverage</a> <a href="/tags/electron-mocha/" style="font-size: 10px;">electron-mocha</a> <a href="/tags/istanbul/" style="font-size: 10px;">istanbul</a> <a href="/tags/libraries/" style="font-size: 10px;">libraries</a> <a href="/tags/mocha/" style="font-size: 10px;">mocha</a> <a href="/tags/namespace/" style="font-size: 10px;">namespace</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/packages/" style="font-size: 20px;">packages</a> <a href="/tags/preset-typescript/" style="font-size: 10px;">preset-typescript</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/tsc/" style="font-size: 10px;">tsc</a> <a href="/tags/window/" style="font-size: 10px;">window</a>
     </div>
   </div>
 
@@ -229,6 +279,10 @@
         
           <li>
             <a href="/2019/02/20/2/">Add a window property with TypeScript</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/20/3/">Parse command line arguments in Node.js</a>
           </li>
         
           <li>
