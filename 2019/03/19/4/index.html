@@ -5,16 +5,20 @@
   
 
   
-  <title>Benny&#39;s Blog</title>
+  <title>Run Node.js apps on Heroku | Benny&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="Benny,Neugebauer,JavaScript,coding">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Benny&#39;s Blog">
-<meta property="og:url" content="https://benny.work/index.html">
+  <meta name="description" content="Getting Started on HerokuThe best way to get started on the Heroku polyglot platform is to follow their fantastic introduction. It’s also worth reading about their supported environments, deployment t">
+<meta name="keywords" content="tsc,heroku,cli,setup,hosting,paas,npm,express,javascript,typescript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Run Node.js apps on Heroku">
+<meta property="og:url" content="https://benny.work/2019/03/19/4/index.html">
 <meta property="og:site_name" content="Benny&#39;s Blog">
+<meta property="og:description" content="Getting Started on HerokuThe best way to get started on the Heroku polyglot platform is to follow their fantastic introduction. It’s also worth reading about their supported environments, deployment t">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-03-23T22:03:53.722Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Benny&#39;s Blog">
+<meta name="twitter:title" content="Run Node.js apps on Heroku">
+<meta name="twitter:description" content="Getting Started on HerokuThe best way to get started on the Heroku polyglot platform is to follow their fantastic introduction. It’s also worth reading about their supported environments, deployment t">
   
     <link rel="alternate" href="/atom.xml" title="Benny&#39;s Blog" type="application/atom+xml">
   
@@ -61,9 +65,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-4" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-4" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/03/19/4/" class="article-date">
   <time datetime="2019-03-19T11:15:32.000Z" itemprop="datePublished">2019-03-19</time>
@@ -80,8 +82,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/19/4/">Run Node.js apps on Heroku</a>
+    <h1 class="article-title" itemprop="name">
+      Run Node.js apps on Heroku
     </h1>
   
 
@@ -151,183 +153,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-3" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/12/3/" class="article-date">
-  <time datetime="2019-03-12T15:28:03.000Z" itemprop="datePublished">2019-03-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Node-js/">Node.js</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/12/3/">Parse command line arguments in Node.js</a>
-    </h1>
+    <a href="/2019/03/12/3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Parse command line arguments in Node.js</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>There are many libraries to build CLI tools for Node.js like <a href="https://github.com/substack/node-optimist" target="_blank" rel="noopener">optimist</a>, <a href="https://github.com/substack/minimist" target="_blank" rel="noopener">minimist</a>, <a href="https://github.com/yargs/yargs" target="_blank" rel="noopener">yargs</a>, <a href="https://github.com/mattallty/Caporal.js" target="_blank" rel="noopener">Caporal.js</a> and <a href="https://github.com/tj/commander.js" target="_blank" rel="noopener">commander</a> to name just a few.</p>
-<p>My favorite one is <a href="https://github.com/tj/commander.js" target="_blank" rel="noopener">commander</a> because it comes with TypeScript definitions:</p>
-<p><strong>commander-example.ts</strong></p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#!<span class="regexp">/usr/</span>bin/env node</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> program <span class="keyword">from</span> <span class="string">'commander'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pkg = <span class="built_in">require</span>(<span class="string">'../package.json'</span>);</span><br><span class="line"><span class="keyword">const</span> appName = <span class="built_in">Object</span>.keys(pkg.bin)[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .description(pkg.description)</span><br><span class="line">  .name(appName)</span><br><span class="line">  .option(<span class="string">'-c, --config &lt;path&gt;'</span>, <span class="string">'set path to configuration file'</span>)</span><br><span class="line">  .version(pkg.version)</span><br><span class="line">  .parse(process.argv);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'Configuration path'</span>, program.config);</span><br></pre></td></tr></table></figure>
-<p>Biggest lack on commander.js is that it does not fail if you have mandatory arguments but don’t supply any argument at all. For example it fails when calling <code>node program.js -c</code> because there is no value for <code>c</code> but it doesn’t fail when just calling <code>node program.js</code>. Tested with commander v2.19.0. <a href="https://github.com/tj/commander.js/issues/44" target="_blank" rel="noopener">GitHub issue</a>.</p>
-<p>Luckily, <a href="https://github.com/mattallty/Caporal.js" target="_blank" rel="noopener">Caporal.js</a> addresses this issue:</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#!<span class="regexp">/usr/</span>bin/env node</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> program <span class="keyword">from</span> <span class="string">'caporal'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pkg = <span class="built_in">require</span>(<span class="string">'../package.json'</span>);</span><br><span class="line"><span class="keyword">const</span> appName = <span class="built_in">Object</span>.keys(pkg.bin)[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">  .version(pkg.version)</span><br><span class="line">  .description(pkg.description)</span><br><span class="line">  .name(appName)</span><br><span class="line">  .option(<span class="string">'--config &lt;config&gt;'</span>, <span class="string">'set path to configuration file'</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">true</span>)</span><br><span class="line">  .action(<span class="function">(<span class="params">args, options, logger</span>) =&gt;</span> &#123;</span><br><span class="line">    logger.info(<span class="string">`Configuration value: <span class="subst">$&#123;options.config&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">program.parse(process.argv);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Error: Missing option –config</p>
-</blockquote>
-<p>Should you just care about getting arguments in an easy way, you will be good with <a href="https://github.com/substack/minimist" target="_blank" rel="noopener">minimist</a>:</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> minimist <span class="keyword">from</span> <span class="string">'minimist'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> argv = minimist(process.argv.slice(<span class="number">1</span>));</span><br><span class="line"><span class="built_in">console</span>.log(argv.mySpecialFlag);</span><br></pre></td></tr></table></figure>
-<p><strong>Extras</strong></p>
-<p>If you want to equip your program with some kind of configuration file (à la <code>webpack.config.js</code> or <code>.babelrc</code>) I can recommend <a href="https://github.com/davidtheclark/cosmiconfig" target="_blank" rel="noopener">cosmiconfig</a> to you. Cosmiconfig searches for and loads configuration files with the extensions <code>.json</code>, <code>.yaml</code>, <code>.yml</code>, or <code>.js</code>.</p>
-<p>And if you need pattern matching you will probably fall in love with <a href="https://github.com/isaacs/node-glob" target="_blank" rel="noopener">Globs</a>.</p>
-<p>If you need an interactive command line user interface with prompts, try <a href="https://github.com/SBoudrias/Inquirer.js" target="_blank" rel="noopener">Inquirer.js</a>.</p>
-<p>And for more colorful log messages on the terminal, there is <a href="https://github.com/chalk/chalk" target="_blank" rel="noopener">chalk</a>.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://benny.work/2019/03/12/3/" data-id="cjtm1r4tp0005509ogs79hsse" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/args/">args</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/argv/">argv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cli/">cli</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libraries/">libraries</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/20/2/" class="article-date">
-  <time datetime="2019-02-20T11:03:25.000Z" itemprop="datePublished">2019-02-20</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/TypeScript/">TypeScript</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/20/2/">Add a window property with TypeScript</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>In my case TypeScript did not know about <code>window.__coverage__</code> which is a property that is set by istanbul’s instrumenter class.</p>
-<p>When trying to use if TypeScript will complain:</p>
-<blockquote>
-<p>TS2339: Property ‘<strong>coverage</strong>‘ does not exist on type ‘Window’.</p>
-</blockquote>
-<p>To get along with it we need to make TypeScript aware of this new property by declaring it in our TypeScript code:</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> global &#123;</span><br><span class="line">  <span class="keyword">interface</span> Window &#123;</span><br><span class="line">    __coverage__: <span class="built_in">Object</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://benny.work/2019/02/20/2/" data-id="cjtm1r4th0001509o4z592zc5" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coverage/">coverage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/namespace/">namespace</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/window/">window</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/02/19/1/" class="article-date">
-  <time datetime="2019-02-19T15:46:25.000Z" itemprop="datePublished">2019-02-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>►<a class="article-category-link" href="/categories/Electron/Testing/">Testing</a>►<a class="article-category-link" href="/categories/Electron/Testing/Unit-Testing/">Unit Testing</a>►<a class="article-category-link" href="/categories/TypeScript/">TypeScript</a>►<a class="article-category-link" href="/categories/TypeScript/Setup/">Setup</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/19/1/">Setup electron-mocha with @babel/register and TypeScript</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Environment</strong></p>
-<ul>
-<li>Node.js v10.9.0</li>
-</ul>
-<p><strong>package.json</strong></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"@babel/core"</span>: <span class="string">"7.3.3"</span>,</span><br><span class="line">    <span class="attr">"@babel/preset-typescript"</span>: <span class="string">"7.3.3"</span>,</span><br><span class="line">    <span class="attr">"@babel/preset-env"</span>: <span class="string">"7.3.1"</span>,</span><br><span class="line">    <span class="attr">"@babel/register"</span>: <span class="string">"7.0.0"</span>,</span><br><span class="line">    <span class="attr">"@babel/plugin-proposal-class-properties"</span>: <span class="string">"7.3.3"</span>,</span><br><span class="line">    <span class="attr">"@types/mocha"</span>: <span class="string">"5.2.6"</span>,</span><br><span class="line">    <span class="attr">"electron"</span>: <span class="string">"4.0.5"</span>,</span><br><span class="line">    <span class="attr">"electron-mocha"</span>: <span class="string">"6.0.4"</span>,</span><br><span class="line">    <span class="attr">"typescript"</span>: <span class="string">"3.3.3"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"dist/main.js"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"electron-mocha --require ./babel-register.js src/**/*.test.ts"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.0"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>babel-register.js</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">"@babel/register"</span>)(&#123;</span><br><span class="line">  cache: <span class="literal">false</span>,</span><br><span class="line">  presets: [</span><br><span class="line">    [</span><br><span class="line">      <span class="string">"@babel/preset-env"</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">"targets"</span>: &#123;</span><br><span class="line">          <span class="string">"node"</span>: <span class="string">"current"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">"@babel/preset-typescript"</span></span><br><span class="line">  ],</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="string">"@babel/proposal-class-properties"</span>,</span><br><span class="line">  ],</span><br><span class="line">  extensions: [<span class="string">".ts"</span>],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><strong>tsconfig.json</strong></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"module"</span>: <span class="string">"commonjs"</span>,</span><br><span class="line">    <span class="attr">"moduleResolution"</span>: <span class="string">"node"</span>,</span><br><span class="line">    <span class="attr">"outDir"</span>: <span class="string">"dist"</span>,</span><br><span class="line">    <span class="attr">"rootDir"</span>: <span class="string">"src"</span>,</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"es5"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"exclude"</span>: [</span><br><span class="line">    <span class="string">"dist"</span>,</span><br><span class="line">    <span class="string">"node_modules"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Takeaways</strong></p>
-<ul>
-<li><code>--require ./babel-register.js</code> must be used because you need to specify <code>extensions</code> for TypeScript and this cannot be done when using just <code>--require @babel/register</code></li>
-<li><code>@babel/preset-env</code> is required with a <code>node</code> target because <code>electron-mocha</code> runs in a Node.js environment</li>
-<li><code>@babel/preset-typescript</code> is used to turn tests written in TypeScript into JavaScript: <a href="https://blogs.msdn.microsoft.com/typescript/2018/08/27/typescript-and-babel-7/" target="_blank" rel="noopener">https://blogs.msdn.microsoft.com/typescript/2018/08/27/typescript-and-babel-7/</a></li>
-<li>The <code>@babel/proposal-class-properties</code> is optional and only required if you code makes already use of class properties</li>
-</ul>
-<p><strong>Good to know</strong></p>
-<ul>
-<li>When your project contains a <code>babel.config.js</code> it may come to conflicts because <code>@babel/register</code> will pick it up and might overwrite settings defined in <code>babel-register.js</code>: <a href="https://babeljs.io/docs/en/babel-register#specifying-options" target="_blank" rel="noopener">https://babeljs.io/docs/en/babel-register#specifying-options</a></li>
-<li>Since Mocha 4 the <code>--compilers</code> flag is deprecated and got replaced by <code>--require</code>: <a href="https://babeljs.io/docs/en/next/tools/mocha/usage" target="_blank" rel="noopener">https://babeljs.io/docs/en/next/tools/mocha/usage</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://benny.work/2019/02/19/1/" data-id="cjtm1r4t80000509odwzaxqgj" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel/">babel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocha/">mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tsc/">tsc</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
 
 </section>
         
