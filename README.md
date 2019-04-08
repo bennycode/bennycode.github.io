@@ -31,3 +31,7 @@ hexo clean && hexo deploy
 ```
 
 More info: [Deployment](https://hexo.io/docs/deployment.html)
+
+## Editor
+
+[HexoEditor](https://github.com/zhuzhuyule/HexoEditor)
