@@ -63,6 +63,80 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/16/6/" class="article-date">
+  <time datetime="2019-04-16T15:40:13.000Z" itemprop="datePublished">2019-04-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/16/6/">Anatomy of an Electron 4 application</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Overview of main concepts in Electron 4 applications.</p>
+<h2 id="main-process"><a href="#main-process" class="headerlink" title="main process"></a>main process</h2><h3 id="Concerns"><a href="#Concerns" class="headerlink" title="Concerns"></a>Concerns</h3><ul>
+<li>Entry point for Electron applications</li>
+<li>Creates and manages <a href="https://electronjs.org/docs/api/browser-window" target="_blank" rel="noopener">BrowserWindow</a> instances</li>
+<li>Registers global shortcuts</li>
+<li>Creates native menus</li>
+<li>Shows native GUI</li>
+<li>Responds to auto-update events</li>
+</ul>
+<h2 id="renderer-process"><a href="#renderer-process" class="headerlink" title="renderer process"></a>renderer process</h2><h3 id="Concerns-1"><a href="#Concerns-1" class="headerlink" title="Concerns"></a>Concerns</h3><ul>
+<li>Takes care of showing your HTML &amp; JS in the Chromium browser</li>
+<li>Runs UI in <a href="https://electronjs.org/docs/api/web-contents" target="_blank" rel="noopener">webContents</a> instances</li>
+<li>Access information about audio and video devices using <a href="https://electronjs.org/docs/api/desktop-capturer" target="_blank" rel="noopener">desktopCapturer</a></li>
+<li>Can access main process modules via <a href="https://electronjs.org/docs/api/remote" target="_blank" rel="noopener">remote</a> module</li>
+</ul>
+<h3 id="Characteristics"><a href="#Characteristics" class="headerlink" title="Characteristics"></a>Characteristics</h3><ul>
+<li><code>process.type</code> is <code>&quot;renderer&quot;</code></li>
+</ul>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;desktopCapturer, ipcRenderer, webFrame&#125; = <span class="built_in">require</span>(<span class="string">'electron'</span>);</span><br><span class="line"><span class="keyword">const</span> &#123;app&#125; = <span class="built_in">require</span>(<span class="string">'electron'</span>).remote</span><br><span class="line"></span><br><span class="line">webFrame.setZoomFactor(<span class="number">1.0</span>);</span><br><span class="line">webFrame.setVisualZoomLevelLimits(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'App configuration directory'</span>, app.getPath(<span class="string">'userData'</span>));</span><br></pre></td></tr></table></figure>
+<h2 id="Inter-process-communication-IPC"><a href="#Inter-process-communication-IPC" class="headerlink" title="Inter-process communication (IPC)"></a>Inter-process communication (IPC)</h2><p>Using inter-process communication a main process can exchange messages with a renderer process.</p>
+<p><strong>main.ts</strong></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;BrowserWindow, ipcMain, IpcMessageEvent&#125; <span class="keyword">from</span> <span class="string">'electron'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> main = <span class="keyword">new</span> BrowserWindow();</span><br><span class="line"></span><br><span class="line">ipcMain.on(<span class="string">'my-app-event'</span>, <span class="function">(<span class="params">event: IpcMessageEvent, price: <span class="built_in">number</span></span>) =&gt;</span> &#123;</span><br><span class="line">  main.webContents.send(<span class="string">'target-price'</span>, price);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>renderer.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;ipcRenderer&#125; <span class="keyword">from</span> <span class="string">'electron'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> updateBtn = <span class="built_in">document</span>.getElementById(<span class="string">'updateBtn'</span>)</span><br><span class="line"></span><br><span class="line">updateBtn.addEventListener(<span class="string">'click'</span>, () =&gt; &#123;</span><br><span class="line">  ipc.send(<span class="string">'my-app-event'</span>, <span class="built_in">document</span>.getElementById(<span class="string">'notifyVal'</span>).value);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="Webview-Preload-Script"><a href="#Webview-Preload-Script" class="headerlink" title="Webview Preload Script"></a>Webview Preload Script</h2><p><strong>index.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello World!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">require</span>(<span class="string">'./renderer.js'</span>);</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">webview</span></span></span><br><span class="line"><span class="tag">      <span class="attr">preload</span>=<span class="string">"./preload.js"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">src</span>=<span class="string">"https://benny.work"</span></span></span><br><span class="line"><span class="tag">    &gt;</span><span class="tag">&lt;/<span class="name">webview</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>You can assign a preload script programmatically:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fileUrl = <span class="built_in">require</span>(<span class="string">'file-url'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> main = <span class="keyword">new</span> BrowserWindow();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> contents = main.webContents;</span><br><span class="line"></span><br><span class="line">contents.on(<span class="string">'will-attach-webview'</span>, (event, webPreferences, params) =&gt; &#123;</span><br><span class="line">  webPreferences.preloadURL = fileUrl(<span class="string">'./preload.js'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>preload.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;ipcRenderer&#125; = <span class="built_in">require</span>(<span class="string">'electron'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'DOMContentLoaded'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="comment">// From guest (webview content) to host (main process)</span></span><br><span class="line">  <span class="built_in">window</span>.addEventListener(z.event.WebApp.LIFECYCLE.RESTART, (event) =&gt; &#123;</span><br><span class="line">    ipcRenderer.send(EVENT_TYPE.WRAPPER.RELAUNCH);</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// From host (main process) to guest (webview content)</span></span><br><span class="line">  ipcRenderer.on(EVENT_TYPE.WRAPPER.RELAUNCHED, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">window</span>.dispatchEvent(<span class="keyword">new</span> CustomEvent(EVENT_TYPE.ACTION.CREATE_ACCOUNT));</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>main.ts</strong></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;BrowserWindow&#125; <span class="keyword">from</span> <span class="string">'electron'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> main = <span class="keyword">new</span> BrowserWindow();</span><br><span class="line">main.loadFile(<span class="string">'index.html'</span>);</span><br><span class="line">ipcMain.on(</span><br><span class="line">  EVENT_TYPE.WRAPPER.RELAUNCH,</span><br><span class="line">  <span class="keyword">async</span> (event: IpcMessageEvent) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Do some work and send a reply...'</span>);</span><br><span class="line">    main.webContents.send(EVENT_TYPE.WRAPPER.RELAUNCHED);</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://benny.work/2019/04/16/6/" data-id="cjujyibch0009fg9okduilb65" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron/">electron</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/main/">main</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/process/">process</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/renderer/">renderer</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-5" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/08/5/" class="article-date">
@@ -124,7 +198,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/04/08/5/" data-id="cjujy96te0006ck9o5mswa99l" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/04/08/5/" data-id="cjujyibca0006fg9ow5ml6rdn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel/">babel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel-plugin-istanbul/">babel-plugin-istanbul</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coverage/">coverage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocha/">mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li></ul>
@@ -216,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/03/19/4/" data-id="cjujy96sy0001ck9ouj32uoxm" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/03/19/4/" data-id="cjujyibc40005fg9olex1orpy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cli/">cli</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/express/">express</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heroku/">heroku</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hosting/">hosting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paas/">paas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/setup/">setup</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tsc/">tsc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
@@ -268,14 +342,14 @@
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> minimist <span class="keyword">from</span> <span class="string">'minimist'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> argv = minimist(process.argv.slice(<span class="number">1</span>));</span><br><span class="line"><span class="built_in">console</span>.log(argv.mySpecialFlag);</span><br></pre></td></tr></table></figure>
 <p><strong>Extras</strong></p>
 <p>If you want to equip your program with some kind of configuration file (à la <code>webpack.config.js</code> or <code>.babelrc</code>) I can recommend <a href="https://github.com/davidtheclark/cosmiconfig" target="_blank" rel="noopener">cosmiconfig</a> to you. Cosmiconfig searches for and loads configuration files with the extensions <code>.json</code>, <code>.yaml</code>, <code>.yml</code>, or <code>.js</code>.</p>
-<p>And if you need pattern matching you will probably fall in love with <a href="https://github.com/isaacs/node-glob" target="_blank" rel="noopener">Globs</a>.</p>
+<p>And if you need pattern matching you will probably fall in love with <a href="https://github.com/isaacs/node-glob" target="_blank" rel="noopener">Globs</a> which are implemened by <a href="https://github.com/isaacs/minimatch" target="_blank" rel="noopener">minimatch</a>.</p>
 <p>If you need an interactive command line user interface with prompts, try <a href="https://github.com/SBoudrias/Inquirer.js" target="_blank" rel="noopener">Inquirer.js</a>.</p>
 <p>And for more colorful log messages on the terminal, there is <a href="https://github.com/chalk/chalk" target="_blank" rel="noopener">chalk</a>.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/03/12/3/" data-id="cjujy96t40003ck9ojphcruh8" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/03/12/3/" data-id="cjujyibbz0003fg9o0vley965" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/args/">args</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/argv/">argv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cli/">cli</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libraries/">libraries</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -324,7 +398,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/02/20/2/" data-id="cjujy96sp0000ck9o0encdr4o" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/02/20/2/" data-id="cjujyibbl0001fg9o3ny5gdyv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coverage/">coverage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/namespace/">namespace</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/window/">window</a></li></ul>
@@ -388,7 +462,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/02/19/1/" data-id="cjujy96t80005ck9olgdt2kij" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/02/19/1/" data-id="cjujyibb40000fg9okrolqxr5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel/">babel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocha/">mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tsc/">tsc</a></li></ul>
@@ -420,7 +494,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/args/">args</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/argv/">argv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel/">babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel-plugin-istanbul/">babel-plugin-istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cli/">cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coverage/">coverage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/express/">express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hosting/">hosting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libraries/">libraries</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mocha/">mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/namespace/">namespace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/">npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paas/">paas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/packages/">packages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/setup/">setup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tsc/">tsc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/window/">window</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/args/">args</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/argv/">argv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel/">babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel-plugin-istanbul/">babel-plugin-istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cli/">cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coverage/">coverage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron/">electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/express/">express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hosting/">hosting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libraries/">libraries</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/main/">main</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mocha/">mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/namespace/">namespace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/">npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paas/">paas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/packages/">packages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/process/">process</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/renderer/">renderer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/setup/">setup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tsc/">tsc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/window/">window</a></li></ul>
     </div>
   </div>
 
@@ -430,7 +504,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/TS2339/" style="font-size: 10px;">TS2339</a> <a href="/tags/TypeScript/" style="font-size: 15px;">TypeScript</a> <a href="/tags/args/" style="font-size: 10px;">args</a> <a href="/tags/argv/" style="font-size: 10px;">argv</a> <a href="/tags/babel/" style="font-size: 15px;">babel</a> <a href="/tags/babel-plugin-istanbul/" style="font-size: 10px;">babel-plugin-istanbul</a> <a href="/tags/cli/" style="font-size: 15px;">cli</a> <a href="/tags/coverage/" style="font-size: 15px;">coverage</a> <a href="/tags/electron-mocha/" style="font-size: 15px;">electron-mocha</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/heroku/" style="font-size: 10px;">heroku</a> <a href="/tags/hosting/" style="font-size: 10px;">hosting</a> <a href="/tags/istanbul/" style="font-size: 10px;">istanbul</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/libraries/" style="font-size: 10px;">libraries</a> <a href="/tags/mocha/" style="font-size: 15px;">mocha</a> <a href="/tags/namespace/" style="font-size: 10px;">namespace</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/paas/" style="font-size: 10px;">paas</a> <a href="/tags/packages/" style="font-size: 20px;">packages</a> <a href="/tags/preset-typescript/" style="font-size: 10px;">preset-typescript</a> <a href="/tags/setup/" style="font-size: 10px;">setup</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/tsc/" style="font-size: 15px;">tsc</a> <a href="/tags/typescript/" style="font-size: 10px;">typescript</a> <a href="/tags/window/" style="font-size: 10px;">window</a>
+      <a href="/tags/TS2339/" style="font-size: 10px;">TS2339</a> <a href="/tags/TypeScript/" style="font-size: 15px;">TypeScript</a> <a href="/tags/args/" style="font-size: 10px;">args</a> <a href="/tags/argv/" style="font-size: 10px;">argv</a> <a href="/tags/babel/" style="font-size: 15px;">babel</a> <a href="/tags/babel-plugin-istanbul/" style="font-size: 10px;">babel-plugin-istanbul</a> <a href="/tags/cli/" style="font-size: 15px;">cli</a> <a href="/tags/coverage/" style="font-size: 15px;">coverage</a> <a href="/tags/electron/" style="font-size: 10px;">electron</a> <a href="/tags/electron-mocha/" style="font-size: 15px;">electron-mocha</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/heroku/" style="font-size: 10px;">heroku</a> <a href="/tags/hosting/" style="font-size: 10px;">hosting</a> <a href="/tags/istanbul/" style="font-size: 10px;">istanbul</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/libraries/" style="font-size: 10px;">libraries</a> <a href="/tags/main/" style="font-size: 10px;">main</a> <a href="/tags/mocha/" style="font-size: 15px;">mocha</a> <a href="/tags/namespace/" style="font-size: 10px;">namespace</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/paas/" style="font-size: 10px;">paas</a> <a href="/tags/packages/" style="font-size: 20px;">packages</a> <a href="/tags/preset-typescript/" style="font-size: 10px;">preset-typescript</a> <a href="/tags/process/" style="font-size: 10px;">process</a> <a href="/tags/renderer/" style="font-size: 10px;">renderer</a> <a href="/tags/setup/" style="font-size: 10px;">setup</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/tsc/" style="font-size: 15px;">tsc</a> <a href="/tags/typescript/" style="font-size: 10px;">typescript</a> <a href="/tags/window/" style="font-size: 10px;">window</a>
     </div>
   </div>
 
@@ -452,6 +526,10 @@
       <ul>
         
           <li>
+            <a href="/2019/04/16/6/">Anatomy of an Electron 4 application</a>
+          </li>
+        
+          <li>
             <a href="/2019/04/08/5/">Setup TypeScript code coverage for Electron applications</a>
           </li>
         
@@ -465,10 +543,6 @@
         
           <li>
             <a href="/2019/02/20/2/">Add a window property with TypeScript</a>
-          </li>
-        
-          <li>
-            <a href="/2019/02/19/1/">Setup electron-mocha with @babel/register and TypeScript</a>
           </li>
         
       </ul>
