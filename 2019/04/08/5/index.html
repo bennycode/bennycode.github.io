@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Setup TypeScript code coverage for Electron applications | Benny&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Environment  Node.js v10.9.0  To receive code coverage based on TypeScript source code within an Electron environment, we need to do the following:  Tell electron-mocha to use babel Register @babel/pr">
+<meta name="keywords" content="coverage,packages,electron-mocha,mocha,babel,babel-plugin-istanbul">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Setup TypeScript code coverage for Electron applications">
+<meta property="og:url" content="https://benny.work/2019/04/08/5/index.html">
+<meta property="og:site_name" content="Benny&#39;s Blog">
+<meta property="og:description" content="Environment  Node.js v10.9.0  To receive code coverage based on TypeScript source code within an Electron environment, we need to do the following:  Tell electron-mocha to use babel Register @babel/pr">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-04-08T20:43:10.755Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Setup TypeScript code coverage for Electron applications">
+<meta name="twitter:description" content="Environment  Node.js v10.9.0  To receive code coverage based on TypeScript source code within an Electron environment, we need to do the following:  Tell electron-mocha to use babel Register @babel/pr">
+  
+    <link rel="alternate" href="/atom.xml" title="Benny&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Benny&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://benny.work"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-5" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/08/5/" class="article-date">
+  <time datetime="2019-04-08T20:43:00.000Z" itemprop="datePublished">2019-04-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Electron/">Electron</a>►<a class="article-category-link" href="/categories/Electron/Testing/">Testing</a>►<a class="article-category-link" href="/categories/Electron/Testing/Code-Coverage/">Code Coverage</a>►<a class="article-category-link" href="/categories/TypeScript/">TypeScript</a>►<a class="article-category-link" href="/categories/TypeScript/Setup/">Setup</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Setup TypeScript code coverage for Electron applications
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Environment</strong></p>
+<ul>
+<li>Node.js v10.9.0</li>
+</ul>
+<p>To receive code coverage based on TypeScript source code within an Electron environment, we need to do the following:</p>
+<ol>
+<li>Tell <code>electron-mocha</code> to use <code>babel</code></li>
+<li>Register <code>@babel/preset-typescript</code> in <code>babel</code> to compile our code on-the-fly</li>
+<li>Register <code>istanbul</code> plugin in <code>babel</code> to instrument our compiled code</li>
+<li>Register a <code>after</code> hook in <code>mocha</code> to write out our coverage information (provided by <code>istanbul</code>)</li>
+<li>Run <code>nyc</code> to create a HTML report from our coverage information stored in <code>.nyc_output</code></li>
+</ol>
+<p><strong>package.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"@babel/core"</span>: <span class="string">"7.3.3"</span>,</span><br><span class="line">    <span class="attr">"@babel/plugin-proposal-class-properties"</span>: <span class="string">"7.3.3"</span>,</span><br><span class="line">    <span class="attr">"@babel/preset-env"</span>: <span class="string">"7.3.1"</span>,</span><br><span class="line">    <span class="attr">"@babel/preset-typescript"</span>: <span class="string">"7.3.3"</span>,</span><br><span class="line">    <span class="attr">"@babel/register"</span>: <span class="string">"7.0.0"</span>,</span><br><span class="line">    <span class="attr">"@types/mocha"</span>: <span class="string">"5.2.6"</span>,</span><br><span class="line">    <span class="attr">"babel-plugin-istanbul"</span>: <span class="string">"5.1.1"</span>,</span><br><span class="line">    <span class="attr">"electron"</span>: <span class="string">"4.0.5"</span>,</span><br><span class="line">    <span class="attr">"electron-mocha"</span>: <span class="string">"6.0.4"</span>,</span><br><span class="line">    <span class="attr">"nyc"</span>: <span class="string">"13.3.0"</span>,</span><br><span class="line">    <span class="attr">"typescript"</span>: <span class="string">"3.3.3"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"dist/main.js"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"coverage"</span>: <span class="string">"yarn test &amp;&amp; nyc report"</span>,</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"electron-mocha --require ./babel-register.js src/**/*.test.main.ts"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.0"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>babel-register.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'@babel/register'</span>)(&#123;</span><br><span class="line">  cache: <span class="literal">false</span>,</span><br><span class="line">  extensions: [<span class="string">'.ts'</span>],</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="string">'@babel/proposal-class-properties'</span>,</span><br><span class="line">    [</span><br><span class="line">      <span class="string">'istanbul'</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        exclude: [<span class="string">'**/*.test*.ts'</span>],</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  ],</span><br><span class="line">  presets: [</span><br><span class="line">    [</span><br><span class="line">      <span class="string">'@babel/preset-env'</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        targets: &#123;</span><br><span class="line">          node: <span class="string">'current'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">'@babel/preset-typescript'</span>,</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>tsconfig.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"module"</span>: <span class="string">"commonjs"</span>,</span><br><span class="line">    <span class="attr">"moduleResolution"</span>: <span class="string">"node"</span>,</span><br><span class="line">    <span class="attr">"outDir"</span>: <span class="string">"dist"</span>,</span><br><span class="line">    <span class="attr">"rootDir"</span>: <span class="string">"src"</span>,</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"es5"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"exclude"</span>: [</span><br><span class="line">    <span class="string">"dist"</span>,</span><br><span class="line">    <span class="string">"node_modules"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>.nycrc.json</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"all"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"exclude"</span>: [<span class="string">"**/*.test*.ts"</span>],</span><br><span class="line">  <span class="attr">"extension"</span>: [<span class="string">".ts"</span>],</span><br><span class="line">  <span class="attr">"include"</span>: [<span class="string">"src/**/*.ts"</span>],</span><br><span class="line">  <span class="attr">"per-file"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"reporter"</span>: [<span class="string">"html"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>after.test.ts</strong></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> fs <span class="keyword">from</span> <span class="string">'fs-extra'</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> path <span class="keyword">from</span> <span class="string">'path'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> global &#123;</span><br><span class="line">  <span class="keyword">namespace</span> NodeJS &#123;</span><br><span class="line">    <span class="keyword">interface</span> Global &#123;</span><br><span class="line">      __coverage__: &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> writeCoverageReport = <span class="function">(<span class="params">coverage: <span class="built_in">Object</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> outputFile = path.resolve(process.cwd(), <span class="string">`.nyc_output/coverage.<span class="subst">$&#123;process['type']&#125;</span>.json`</span>);</span><br><span class="line">  fs.outputJsonSync(outputFile, coverage);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">after(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> coverageInfo = global.__coverage__;</span><br><span class="line">  <span class="keyword">if</span> (coverageInfo) &#123;</span><br><span class="line">    writeCoverageReport(coverageInfo);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>Takeaways</strong></p>
+<ul>
+<li><code>nyc</code> can combine multiple coverage files (like <code>coverage.json</code>) into one report</li>
+<li><code>eletron-mocha</code> can run tests in an Electron renderer process and in an Electron main process</li>
+<li>To get full code coverage, there needs to be a test run with test files for the main process (<code>*.test.main.ts</code>) and a second run for tests from the renderer process (<code>*.test.renderer.ts</code>)</li>
+<li>Electron provides a <code>process.type</code> (can be <code>browser</code> or <code>renderer</code>) to indicate in which process the code runs</li>
+<li>To have a universal <code>after</code> hook for both test runs, the <code>process.type</code> can be used in the coverage output file name</li>
+<li><code>istanbul</code> needs to exclude the test files, otherwise it will report code coverage for the test files too</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://benny.work/2019/04/08/5/" data-id="cjujy96te0006ck9o5mswa99l" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel/">babel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel-plugin-istanbul/">babel-plugin-istanbul</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coverage/">coverage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocha/">mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/19/4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Run Node.js apps on Heroku</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/">Testing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/Code-Coverage/">Code Coverage</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/Unit-Testing/">Unit Testing</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/">TypeScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/Setup/">Setup</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/args/">args</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/argv/">argv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel/">babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel-plugin-istanbul/">babel-plugin-istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cli/">cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coverage/">coverage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/express/">express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hosting/">hosting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libraries/">libraries</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mocha/">mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/namespace/">namespace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/">npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paas/">paas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/packages/">packages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/setup/">setup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tsc/">tsc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/window/">window</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/TS2339/" style="font-size: 10px;">TS2339</a> <a href="/tags/TypeScript/" style="font-size: 15px;">TypeScript</a> <a href="/tags/args/" style="font-size: 10px;">args</a> <a href="/tags/argv/" style="font-size: 10px;">argv</a> <a href="/tags/babel/" style="font-size: 15px;">babel</a> <a href="/tags/babel-plugin-istanbul/" style="font-size: 10px;">babel-plugin-istanbul</a> <a href="/tags/cli/" style="font-size: 15px;">cli</a> <a href="/tags/coverage/" style="font-size: 15px;">coverage</a> <a href="/tags/electron-mocha/" style="font-size: 15px;">electron-mocha</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/heroku/" style="font-size: 10px;">heroku</a> <a href="/tags/hosting/" style="font-size: 10px;">hosting</a> <a href="/tags/istanbul/" style="font-size: 10px;">istanbul</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/libraries/" style="font-size: 10px;">libraries</a> <a href="/tags/mocha/" style="font-size: 15px;">mocha</a> <a href="/tags/namespace/" style="font-size: 10px;">namespace</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/paas/" style="font-size: 10px;">paas</a> <a href="/tags/packages/" style="font-size: 20px;">packages</a> <a href="/tags/preset-typescript/" style="font-size: 10px;">preset-typescript</a> <a href="/tags/setup/" style="font-size: 10px;">setup</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/tsc/" style="font-size: 15px;">tsc</a> <a href="/tags/typescript/" style="font-size: 10px;">typescript</a> <a href="/tags/window/" style="font-size: 10px;">window</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/08/5/">Setup TypeScript code coverage for Electron applications</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/19/4/">Run Node.js apps on Heroku</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/12/3/">Parse command line arguments in Node.js</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/20/2/">Add a window property with TypeScript</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/19/1/">Setup electron-mocha with @babel/register and TypeScript</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Benny Neugebauer<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
