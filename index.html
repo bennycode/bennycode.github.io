@@ -63,6 +63,61 @@
       <div class="outer">
         <section id="main">
   
+    <article id="false-7" class="article article-type-false" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/26/7/" class="article-date">
+  <time datetime="2019-04-26T09:20:09.000Z" itemprop="datePublished">2019-04-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TypeScript/">TypeScript</a>►<a class="article-category-link" href="/categories/TypeScript/Setup/">Setup</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/26/7/">You might not need aliases</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Importing a function in ES6 can look like this:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;getIndexValue&#125; <span class="keyword">from</span> <span class="string">'./math/FibonacciSequence'</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>problems with tsc</li>
+<li>you need a config (think of webpack zero config trend)</li>
+<li>it is not clear if node modules or not (think of lodash/…)</li>
+<li>adds a layer of complexity</li>
+<li>IDE loss of auto import (needs to be adjusted)</li>
+<li>IDE loss of jump into that file</li>
+<li>IDE can change paths anyway</li>
+<li>it adds convenience which is given by the IDE already</li>
+<li>Turn “util” often becomes “utils” because of clash with node core library</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://benny.work/2019/04/26/7/" data-id="cjuy8wrdk000asw9oic7vy7dg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ECMAScript-2015/">ECMAScript 2015</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ECMAScript-6/">ECMAScript 6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ECMAScript-Harmony/">ECMAScript Harmony</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES2015/">ES2015</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/alias/">alias</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/resolve/">resolve</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-6" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/16/6/" class="article-date">
@@ -70,7 +125,7 @@
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
+    <a class="article-category-link" href="/categories/Electron/">Electron</a>►<a class="article-category-link" href="/categories/Electron/Basics/">Basics</a>
   </div>
 
   </div>
@@ -128,7 +183,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/04/16/6/" data-id="cjul9nnid0006589ou7d1julb" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/04/16/6/" data-id="cjuy8wrdi0009sw9o2ty6nnyq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron/">electron</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/main/">main</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/process/">process</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/renderer/">renderer</a></li></ul>
@@ -182,8 +237,7 @@
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"@babel/core"</span>: <span class="string">"7.3.3"</span>,</span><br><span class="line">    <span class="attr">"@babel/plugin-proposal-class-properties"</span>: <span class="string">"7.3.3"</span>,</span><br><span class="line">    <span class="attr">"@babel/preset-env"</span>: <span class="string">"7.3.1"</span>,</span><br><span class="line">    <span class="attr">"@babel/preset-typescript"</span>: <span class="string">"7.3.3"</span>,</span><br><span class="line">    <span class="attr">"@babel/register"</span>: <span class="string">"7.0.0"</span>,</span><br><span class="line">    <span class="attr">"@types/mocha"</span>: <span class="string">"5.2.6"</span>,</span><br><span class="line">    <span class="attr">"babel-plugin-istanbul"</span>: <span class="string">"5.1.1"</span>,</span><br><span class="line">    <span class="attr">"electron"</span>: <span class="string">"4.0.5"</span>,</span><br><span class="line">    <span class="attr">"electron-mocha"</span>: <span class="string">"6.0.4"</span>,</span><br><span class="line">    <span class="attr">"nyc"</span>: <span class="string">"13.3.0"</span>,</span><br><span class="line">    <span class="attr">"typescript"</span>: <span class="string">"3.3.3"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"dist/main.js"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"coverage"</span>: <span class="string">"yarn test &amp;&amp; nyc report"</span>,</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"electron-mocha --require ./babel-register.js src/**/*.test.main.ts"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.0"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>babel-register.js</strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'@babel/register'</span>)(&#123;</span><br><span class="line">  cache: <span class="literal">false</span>,</span><br><span class="line">  extensions: [<span class="string">'.ts'</span>],</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="string">'@babel/proposal-class-properties'</span>,</span><br><span class="line">    [</span><br><span class="line">      <span class="string">'istanbul'</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        exclude: [<span class="string">'**/*.test*.ts'</span>],</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  ],</span><br><span class="line">  presets: [</span><br><span class="line">    [</span><br><span class="line">      <span class="string">'@babel/preset-env'</span>,</span><br><span class="line">      &#123;</span><br><span class="line">        targets: &#123;</span><br><span class="line">          node: <span class="string">'current'</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">'@babel/preset-typescript'</span>,</span><br><span class="line">  ],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><strong>tsconfig.json</strong></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"module"</span>: <span class="string">"commonjs"</span>,</span><br><span class="line">    <span class="attr">"moduleResolution"</span>: <span class="string">"node"</span>,</span><br><span class="line">    <span class="attr">"outDir"</span>: <span class="string">"dist"</span>,</span><br><span class="line">    <span class="attr">"rootDir"</span>: <span class="string">"src"</span>,</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"es5"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"exclude"</span>: [</span><br><span class="line">    <span class="string">"dist"</span>,</span><br><span class="line">    <span class="string">"node_modules"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>tsconfig.json</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;compilerOptions&quot;: &#123;</span><br><span class="line">    &quot;module&quot;: &quot;commonjs&quot;,</span><br><span class="line">    &quot;moduleResolution&quot;: &quot;node&quot;,</span><br><span class="line">    &quot;outDir&quot;: &quot;dist&quot;,</span><br><span class="line">    &quot;rootDir&quot;: &quot;src&quot;,</span><br><span class="line">    &quot;target&quot;: &quot;es5&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;exclude&quot;: [</span><br><span class="line">    &quot;dist&quot;,</span><br><span class="line">    &quot;node_modules&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>.nycrc.json</strong></p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"all"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"exclude"</span>: [<span class="string">"**/*.test*.ts"</span>],</span><br><span class="line">  <span class="attr">"extension"</span>: [<span class="string">".ts"</span>],</span><br><span class="line">  <span class="attr">"include"</span>: [<span class="string">"src/**/*.ts"</span>],</span><br><span class="line">  <span class="attr">"per-file"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"reporter"</span>: [<span class="string">"html"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>after.test.ts</strong></p>
@@ -201,7 +255,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/04/08/5/" data-id="cjul9nnia0005589o88pm6705" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/04/08/5/" data-id="cjuy8wrdg0006sw9oxbqf8nwd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel/">babel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel-plugin-istanbul/">babel-plugin-istanbul</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coverage/">coverage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocha/">mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li></ul>
@@ -220,7 +274,7 @@
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Node-js/">Node.js</a>
+    <a class="article-category-link" href="/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/categories/Node-js/Hosting/">Hosting</a>
   </div>
 
   </div>
@@ -293,7 +347,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/03/19/4/" data-id="cjul9nnkm002k589oghgbwktc" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/03/19/4/" data-id="cjuy8wrde0005sw9ozwelompd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cli/">cli</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/express/">express</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heroku/">heroku</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hosting/">hosting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paas/">paas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/setup/">setup</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tsc/">tsc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
@@ -312,7 +366,7 @@
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Node-js/">Node.js</a>
+    <a class="article-category-link" href="/categories/Node-js/">Node.js</a>►<a class="article-category-link" href="/categories/Node-js/CLI/">CLI</a>
   </div>
 
   </div>
@@ -352,7 +406,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/03/12/3/" data-id="cjul9nni60003589otcj6l1gz" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/03/12/3/" data-id="cjuy8wrd60001sw9omiivgx48" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/args/">args</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/argv/">argv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cli/">cli</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libraries/">libraries</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -371,7 +425,7 @@
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/TypeScript/">TypeScript</a>
+    <a class="article-category-link" href="/categories/TypeScript/">TypeScript</a>►<a class="article-category-link" href="/categories/TypeScript/Type-Definitions/">Type Definitions</a>
   </div>
 
   </div>
@@ -402,7 +456,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/02/20/2/" data-id="cjul9nnhn0000589o1q35eydh" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/02/20/2/" data-id="cjuy8wrdb0003sw9on2qc8nf8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coverage/">coverage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/global/">global</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/namespace/">namespace</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/window/">window</a></li></ul>
@@ -466,7 +520,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/02/19/1/" data-id="cjul9nnhy0001589o1rjnv55p" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/02/19/1/" data-id="cjuy8wrcv0000sw9ofy5vv8ix" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel/">babel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocha/">mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tsc/">tsc</a></li></ul>
@@ -488,7 +542,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/">Testing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/Code-Coverage/">Code Coverage</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/Unit-Testing/">Unit Testing</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/">TypeScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/Setup/">Setup</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/">Testing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/Code-Coverage/">Code Coverage</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/Unit-Testing/">Unit Testing</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/CLI/">CLI</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/Hosting/">Hosting</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/">TypeScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/Setup/">Setup</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/Type-Definitions/">Type Definitions</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -498,7 +552,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/args/">args</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/argv/">argv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel/">babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel-plugin-istanbul/">babel-plugin-istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cli/">cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coverage/">coverage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron/">electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/express/">express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/global/">global</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hosting/">hosting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libraries/">libraries</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/main/">main</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mocha/">mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/namespace/">namespace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/">npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paas/">paas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/packages/">packages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/process/">process</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/renderer/">renderer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/setup/">setup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tsc/">tsc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/window/">window</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECMAScript-2015/">ECMAScript 2015</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECMAScript-6/">ECMAScript 6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECMAScript-Harmony/">ECMAScript Harmony</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES2015/">ES2015</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/">ES6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alias/">alias</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/args/">args</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/argv/">argv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel/">babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel-plugin-istanbul/">babel-plugin-istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cli/">cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coverage/">coverage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron/">electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/express/">express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/global/">global</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hosting/">hosting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libraries/">libraries</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/main/">main</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mocha/">mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/namespace/">namespace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/">npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paas/">paas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/packages/">packages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/process/">process</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/renderer/">renderer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resolve/">resolve</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/setup/">setup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tsc/">tsc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/window/">window</a></li></ul>
     </div>
   </div>
 
@@ -508,7 +562,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/TS2339/" style="font-size: 10px;">TS2339</a> <a href="/tags/TypeScript/" style="font-size: 15px;">TypeScript</a> <a href="/tags/args/" style="font-size: 10px;">args</a> <a href="/tags/argv/" style="font-size: 10px;">argv</a> <a href="/tags/babel/" style="font-size: 15px;">babel</a> <a href="/tags/babel-plugin-istanbul/" style="font-size: 10px;">babel-plugin-istanbul</a> <a href="/tags/cli/" style="font-size: 15px;">cli</a> <a href="/tags/coverage/" style="font-size: 15px;">coverage</a> <a href="/tags/electron/" style="font-size: 10px;">electron</a> <a href="/tags/electron-mocha/" style="font-size: 15px;">electron-mocha</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/global/" style="font-size: 10px;">global</a> <a href="/tags/heroku/" style="font-size: 10px;">heroku</a> <a href="/tags/hosting/" style="font-size: 10px;">hosting</a> <a href="/tags/istanbul/" style="font-size: 10px;">istanbul</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/libraries/" style="font-size: 10px;">libraries</a> <a href="/tags/main/" style="font-size: 10px;">main</a> <a href="/tags/mocha/" style="font-size: 15px;">mocha</a> <a href="/tags/namespace/" style="font-size: 10px;">namespace</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/paas/" style="font-size: 10px;">paas</a> <a href="/tags/packages/" style="font-size: 20px;">packages</a> <a href="/tags/preset-typescript/" style="font-size: 10px;">preset-typescript</a> <a href="/tags/process/" style="font-size: 10px;">process</a> <a href="/tags/renderer/" style="font-size: 10px;">renderer</a> <a href="/tags/setup/" style="font-size: 10px;">setup</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/tsc/" style="font-size: 15px;">tsc</a> <a href="/tags/typescript/" style="font-size: 10px;">typescript</a> <a href="/tags/window/" style="font-size: 10px;">window</a>
+      <a href="/tags/ECMAScript-2015/" style="font-size: 10px;">ECMAScript 2015</a> <a href="/tags/ECMAScript-6/" style="font-size: 10px;">ECMAScript 6</a> <a href="/tags/ECMAScript-Harmony/" style="font-size: 10px;">ECMAScript Harmony</a> <a href="/tags/ES2015/" style="font-size: 10px;">ES2015</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/TS2339/" style="font-size: 10px;">TS2339</a> <a href="/tags/TypeScript/" style="font-size: 15px;">TypeScript</a> <a href="/tags/alias/" style="font-size: 10px;">alias</a> <a href="/tags/args/" style="font-size: 10px;">args</a> <a href="/tags/argv/" style="font-size: 10px;">argv</a> <a href="/tags/babel/" style="font-size: 15px;">babel</a> <a href="/tags/babel-plugin-istanbul/" style="font-size: 10px;">babel-plugin-istanbul</a> <a href="/tags/cli/" style="font-size: 15px;">cli</a> <a href="/tags/coverage/" style="font-size: 15px;">coverage</a> <a href="/tags/electron/" style="font-size: 10px;">electron</a> <a href="/tags/electron-mocha/" style="font-size: 15px;">electron-mocha</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/global/" style="font-size: 10px;">global</a> <a href="/tags/heroku/" style="font-size: 10px;">heroku</a> <a href="/tags/hosting/" style="font-size: 10px;">hosting</a> <a href="/tags/istanbul/" style="font-size: 10px;">istanbul</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/libraries/" style="font-size: 10px;">libraries</a> <a href="/tags/main/" style="font-size: 10px;">main</a> <a href="/tags/mocha/" style="font-size: 15px;">mocha</a> <a href="/tags/namespace/" style="font-size: 10px;">namespace</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/paas/" style="font-size: 10px;">paas</a> <a href="/tags/packages/" style="font-size: 20px;">packages</a> <a href="/tags/preset-typescript/" style="font-size: 10px;">preset-typescript</a> <a href="/tags/process/" style="font-size: 10px;">process</a> <a href="/tags/renderer/" style="font-size: 10px;">renderer</a> <a href="/tags/resolve/" style="font-size: 10px;">resolve</a> <a href="/tags/setup/" style="font-size: 10px;">setup</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/tsc/" style="font-size: 15px;">tsc</a> <a href="/tags/typescript/" style="font-size: 10px;">typescript</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/window/" style="font-size: 10px;">window</a>
     </div>
   </div>
 
@@ -530,6 +584,10 @@
       <ul>
         
           <li>
+            <a href="/2019/04/26/7/">You might not need aliases</a>
+          </li>
+        
+          <li>
             <a href="/2019/04/16/6/">Anatomy of an Electron 4 application</a>
           </li>
         
@@ -543,10 +601,6 @@
         
           <li>
             <a href="/2019/03/12/3/">Parse command line arguments in Node.js</a>
-          </li>
-        
-          <li>
-            <a href="/2019/02/20/2/">Add a window property with TypeScript</a>
           </li>
         
       </ul>
