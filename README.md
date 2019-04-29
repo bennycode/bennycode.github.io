@@ -32,6 +32,11 @@ hexo clean && hexo deploy
 
 More info: [Deployment](https://hexo.io/docs/deployment.html)
 
+## Theme
+
+- [Code formatting options](https://github.com/hexojs/hexo-theme-unit-test/blob/master/source/_posts/tag-plugins.md)
+- [How to post a gallery post?](https://github.com/hexojs/hexo-theme-unit-test/blob/master/source/_posts/gallery-post.md)
+
 ## Editor
 
 [HexoEditor](https://github.com/zhuzhuyule/HexoEditor)
