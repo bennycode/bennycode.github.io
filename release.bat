@@ -1,3 +1,1 @@
-hexo generate && hexo clean && hexo deploy
-
-cmd /k
+hexo clean && hexo deploy && PAUSE
