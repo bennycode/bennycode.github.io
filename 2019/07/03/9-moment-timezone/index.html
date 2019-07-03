@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Get milliseconds of date in specific timezone | Benny&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Moment.js is a great choice if you want to work with dates and times in JavaScript. It is very handy for creating interchange representations like ISO 8601 strings, taking your current timezone into a">
+<meta name="keywords" content="CEST,GMT,IANA,moment,timezone,UTC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Get milliseconds of date in specific timezone">
+<meta property="og:url" content="https://benny.work/2019/07/03/9-moment-timezone/index.html">
+<meta property="og:site_name" content="Benny&#39;s Blog">
+<meta property="og:description" content="Moment.js is a great choice if you want to work with dates and times in JavaScript. It is very handy for creating interchange representations like ISO 8601 strings, taking your current timezone into a">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-03T13:20:17.669Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Get milliseconds of date in specific timezone">
+<meta name="twitter:description" content="Moment.js is a great choice if you want to work with dates and times in JavaScript. It is very handy for creating interchange representations like ISO 8601 strings, taking your current timezone into a">
+  
+    <link rel="alternate" href="/atom.xml" title="Benny&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Benny&#39;s Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://benny.work"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-9-moment-timezone" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/03/9-moment-timezone/" class="article-date">
+  <time datetime="2019-07-03T13:12:18.000Z" itemprop="datePublished">2019-07-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JavaScript/">JavaScript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Get milliseconds of date in specific timezone
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://momentjs.com/" target="_blank" rel="noopener">Moment.js</a> is a great choice if you want to work with dates and times in JavaScript. It is very handy for creating interchange representations like <a href="https://en.wikipedia.org/wiki/ISO_8601" target="_blank" rel="noopener">ISO 8601</a> strings, taking your current timezone into account.</p>
+<h2 id="Convert-to-milliseconds"><a href="#Convert-to-milliseconds" class="headerlink" title="Convert to milliseconds"></a>Convert to milliseconds</h2><p>Let’s say you live in Berlin (Germany) and you want to represent June, 26th of 2019 at midnight in milliseconds with Central European Summer Time (GMT+2). With <a href="https://momentjs.com/" target="_blank" rel="noopener">Moment.js</a> v2.24 you have at least the following possibilities to do that:</p>
+<p><strong>Defined UTC Offset</strong></p>
+<figure class="highlight js"><figcaption><span>defined-utc-offset.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> moment = <span class="built_in">require</span>(<span class="string">'moment'</span>);</span><br><span class="line"><span class="keyword">const</span> unixTimestamp = moment(<span class="string">'2019-06-26T00:00:00.000+02:00'</span>).valueOf();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'unixTimestamp'</span>, unixTimestamp); <span class="comment">// 1561500000000</span></span><br></pre></td></tr></table></figure>
+<p><strong>Detected UTC Offset</strong></p>
+<figure class="highlight js"><figcaption><span>detected-utc-offset.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> moment = <span class="built_in">require</span>(<span class="string">'moment'</span>);</span><br><span class="line"><span class="keyword">const</span> utcOffsetInMinutes = <span class="keyword">new</span> <span class="built_in">Date</span>().getTimezoneOffset(); <span class="comment">// -120 (2 hours)</span></span><br><span class="line"><span class="keyword">const</span> utcOffsetInMillis = utcOffsetInMinutes * <span class="number">60000</span>;</span><br><span class="line"><span class="keyword">const</span> unixTimestamp = moment(<span class="string">'2019-06-26T00:00:00.000Z'</span>).valueOf() + utcOffsetInMillis;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'unixTimestamp'</span>, unixTimestamp); <span class="comment">// 1561500000000</span></span><br></pre></td></tr></table></figure>
+<p><strong>Defined Zone Info</strong></p>
+<figure class="highlight js"><figcaption><span>defined-zone-info.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> moment = <span class="built_in">require</span>(<span class="string">'moment-timezone'</span>);</span><br><span class="line"><span class="keyword">const</span> zoneInfo = <span class="string">'Europe/Berlin'</span>;</span><br><span class="line"><span class="keyword">const</span> unixTimestamp = moment.tz(<span class="string">'2019-06-26 00:00:00'</span>, zoneInfo).valueOf();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'unixTimestamp'</span>, unixTimestamp); <span class="comment">// 1561500000000</span></span><br></pre></td></tr></table></figure>
+<p><strong>Detected Zone Info</strong></p>
+<figure class="highlight js"><figcaption><span>detected-zone-info.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> moment = <span class="built_in">require</span>(<span class="string">'moment-timezone'</span>);</span><br><span class="line"><span class="keyword">const</span> zoneInfo = moment.tz.guess();</span><br><span class="line"><span class="keyword">const</span> unixTimestamp = moment.tz(<span class="string">'2019-06-26 00:00:00'</span>, zoneInfo).valueOf();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'unixTimestamp'</span>, unixTimestamp); <span class="comment">// 1561500000000</span></span><br></pre></td></tr></table></figure>
+<p><strong>Pro Tip:</strong> You can get date and time expressed according to ISO 8601 in JavaScript from the current date when calling: </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>().toISOString(); <span class="comment">// 019-07-03T13:12:18.784Z</span></span><br></pre></td></tr></table></figure>
+<p>Note that the above string will always be normalized to UTC time (Z), so you need to apply the UTC offset yourself.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://benny.work/2019/07/03/9-moment-timezone/" data-id="cjxn9r9c90006o09o4iyjvfvs" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CEST/">CEST</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GMT/">GMT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IANA/">IANA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UTC/">UTC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/moment/">moment</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/timezone/">timezone</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/29/8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">TypeScript code coverage with Karma</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Basics/">Basics</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/">Testing</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/Code-Coverage/">Code Coverage</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/Testing/Unit-Testing/">Unit Testing</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/">Node.js</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/CLI/">CLI</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node-js/Hosting/">Hosting</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/">TypeScript</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/Setup/">Setup</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/TypeScript/Type-Definitions/">Type Definitions</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CEST/">CEST</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECMAScript-2015/">ECMAScript 2015</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECMAScript-6/">ECMAScript 6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECMAScript-Harmony/">ECMAScript Harmony</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES2015/">ES2015</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/">ES6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GMT/">GMT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IANA/">IANA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UTC/">UTC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/alias/">alias</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/args/">args</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/argv/">argv</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel/">babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/babel-plugin-istanbul/">babel-plugin-istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cli/">cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coverage/">coverage</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron/">electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/express/">express</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/global/">global</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hosting/">hosting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/karma/">karma</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/libraries/">libraries</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/main/">main</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mocha/">mocha</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/moment/">moment</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/namespace/">namespace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm/">npm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paas/">paas</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/packages/">packages</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/preprocessor/">preprocessor</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/process/">process</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/renderer/">renderer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/resolve/">resolve</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/setup/">setup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/timezone/">timezone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tsc/">tsc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/typescript/">typescript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/window/">window</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CEST/" style="font-size: 10px;">CEST</a> <a href="/tags/ECMAScript-2015/" style="font-size: 10px;">ECMAScript 2015</a> <a href="/tags/ECMAScript-6/" style="font-size: 10px;">ECMAScript 6</a> <a href="/tags/ECMAScript-Harmony/" style="font-size: 10px;">ECMAScript Harmony</a> <a href="/tags/ES2015/" style="font-size: 10px;">ES2015</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/GMT/" style="font-size: 10px;">GMT</a> <a href="/tags/IANA/" style="font-size: 10px;">IANA</a> <a href="/tags/Node-js/" style="font-size: 10px;">Node.js</a> <a href="/tags/TS2339/" style="font-size: 10px;">TS2339</a> <a href="/tags/TypeScript/" style="font-size: 15px;">TypeScript</a> <a href="/tags/UTC/" style="font-size: 10px;">UTC</a> <a href="/tags/alias/" style="font-size: 10px;">alias</a> <a href="/tags/args/" style="font-size: 10px;">args</a> <a href="/tags/argv/" style="font-size: 10px;">argv</a> <a href="/tags/babel/" style="font-size: 20px;">babel</a> <a href="/tags/babel-plugin-istanbul/" style="font-size: 10px;">babel-plugin-istanbul</a> <a href="/tags/cli/" style="font-size: 15px;">cli</a> <a href="/tags/coverage/" style="font-size: 20px;">coverage</a> <a href="/tags/electron/" style="font-size: 10px;">electron</a> <a href="/tags/electron-mocha/" style="font-size: 15px;">electron-mocha</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/global/" style="font-size: 10px;">global</a> <a href="/tags/heroku/" style="font-size: 10px;">heroku</a> <a href="/tags/hosting/" style="font-size: 10px;">hosting</a> <a href="/tags/istanbul/" style="font-size: 15px;">istanbul</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/karma/" style="font-size: 10px;">karma</a> <a href="/tags/libraries/" style="font-size: 10px;">libraries</a> <a href="/tags/main/" style="font-size: 10px;">main</a> <a href="/tags/mocha/" style="font-size: 15px;">mocha</a> <a href="/tags/moment/" style="font-size: 10px;">moment</a> <a href="/tags/namespace/" style="font-size: 10px;">namespace</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/paas/" style="font-size: 10px;">paas</a> <a href="/tags/packages/" style="font-size: 20px;">packages</a> <a href="/tags/preprocessor/" style="font-size: 10px;">preprocessor</a> <a href="/tags/preset-typescript/" style="font-size: 10px;">preset-typescript</a> <a href="/tags/process/" style="font-size: 10px;">process</a> <a href="/tags/renderer/" style="font-size: 10px;">renderer</a> <a href="/tags/resolve/" style="font-size: 10px;">resolve</a> <a href="/tags/setup/" style="font-size: 10px;">setup</a> <a href="/tags/timezone/" style="font-size: 10px;">timezone</a> <a href="/tags/tools/" style="font-size: 10px;">tools</a> <a href="/tags/tsc/" style="font-size: 15px;">tsc</a> <a href="/tags/typescript/" style="font-size: 15px;">typescript</a> <a href="/tags/webpack/" style="font-size: 15px;">webpack</a> <a href="/tags/window/" style="font-size: 10px;">window</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/07/03/9-moment-timezone/">Get milliseconds of date in specific timezone</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/29/8/">TypeScript code coverage with Karma</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/7/">You might not need aliases</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/16/6/">Anatomy of an Electron 4 application</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/08/5/">Setup TypeScript code coverage for Electron applications</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Benny Neugebauer<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
