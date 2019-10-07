@@ -94,7 +94,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/07/03/10-chrome-devtools/" data-id="cjztzlorc00005c9onwqrzyxw" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/07/03/10-chrome-devtools/" data-id="ck1h0gt6f0000ig9oefyotz0j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CEST/">CEST</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GMT/">GMT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IANA/">IANA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UTC/">UTC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/moment/">moment</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/timezone/">timezone</a></li></ul>
@@ -143,13 +143,13 @@
 <p><strong>Detected Zone Info</strong></p>
 <figure class="highlight js"><figcaption><span>detected-zone-info.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> moment = <span class="built_in">require</span>(<span class="string">'moment-timezone'</span>);</span><br><span class="line"><span class="keyword">const</span> zoneInfo = moment.tz.guess();</span><br><span class="line"><span class="keyword">const</span> unixTimestamp = moment.tz(<span class="string">'2019-06-26 00:00:00'</span>, zoneInfo).valueOf();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'unixTimestamp'</span>, unixTimestamp); <span class="comment">// 1561500000000</span></span><br></pre></td></tr></table></figure>
 <p><strong>Pro Tip:</strong> You can get date and time expressed according to ISO 8601 in JavaScript from the current date when calling: </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>().toISOString(); <span class="comment">// 019-07-03T13:12:18.784Z</span></span><br></pre></td></tr></table></figure>
-<p>Note that the above string will always be normalized to UTC time (Z), so you need to apply the UTC offset yourself.</p>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>().toISOString(); <span class="comment">// "2019-07-03T13:12:18.784Z"</span></span><br></pre></td></tr></table></figure>
+<p>Note that the above string will always be normalized to UTC time (Z). To prevent UTC conversion you may call:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>().toISOString(<span class="literal">true</span>); <span class="comment">// "2019-07-03T15:12:18.784+02:00"</span></span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/07/03/9-moment-timezone/" data-id="cjztzlosp000f5c9otm32p8ed" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/07/03/9-moment-timezone/" data-id="ck1h0gt78000fig9olrakdgz1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CEST/">CEST</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GMT/">GMT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IANA/">IANA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UTC/">UTC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/moment/">moment</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/timezone/">timezone</a></li></ul>
@@ -222,7 +222,7 @@
 <h3 id="Update-imports"><a href="#Update-imports" class="headerlink" title="Update imports"></a>Update imports</h3><p>Our test code will now be preprocessed by webpack which means that we can use Node.js features like <code>require</code> statements to import code. Webpack will make sure that the <code>require</code> statements get processed into something that can be understood by our Browser environment:</p>
 <figure class="highlight js"><figcaption><span>karma.conf.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line marked"><span class="keyword">const</span> afterTwoSeconds = <span class="built_in">require</span>(<span class="string">'./main'</span>);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'afterTwoSeconds'</span>, () =&gt; &#123;</span><br><span class="line">  it(<span class="string">'resolves after 2 seconds'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> myCallbackSpy = jasmine.createSpy(<span class="string">'myCallbackSpy'</span>);</span><br><span class="line marked">    <span class="keyword">await</span> afterTwoSeconds(myCallbackSpy);</span><br><span class="line">    expect(myCallbackSpy).toHaveBeenCalled();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="Add-Babel"><a href="#Add-Babel" class="headerlink" title="Add Babel"></a>Add Babel</h2><p><a href="https://devblogs.microsoft.com/typescript/typescript-and-babel-7/" target="_blank" rel="noopener">Babel 7 ships with TypeScript support</a> and can be used to preprocess code with TypeScript’s compiler. You might not need Babel to compile your code with TypeScript but using Babel’s ecosystem (with presets like <a href="https://babeljs.io/docs/en/babel-preset-env" target="_blank" rel="noopener">@babel/preset-env</a>) can bring enormous benefits if you want to ship code for various environments. That’s why it is the preferred setup in this tutorial, so let’s get started with a Babel setup:</p>
-<h3 id="Update-dependencies-2"><a href="#Update-dependencies-2" class="headerlink" title="Update dependencies"></a>Update dependencies</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add --dev @babel/core babel-loader</span><br></pre></td></tr></table></figure>
+<h3 id="Update-dependencies-2"><a href="#Update-dependencies-2" class="headerlink" title="Update dependencies"></a>Update dependencies</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add @babel/core babel-loader --dev</span><br></pre></td></tr></table></figure>
 <figure class="highlight json"><figcaption><span>package.json</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line marked">    <span class="attr">"@babel/core"</span>: <span class="string">"7.4.4"</span>,</span><br><span class="line marked">    <span class="attr">"babel-loader"</span>: <span class="string">"8.0.5"</span>,</span><br><span class="line">    <span class="attr">"jasmine"</span>: <span class="string">"3.4.0"</span>,</span><br><span class="line">    <span class="attr">"karma"</span>: <span class="string">"4.1.0"</span>,</span><br><span class="line">    <span class="attr">"karma-chrome-launcher"</span>: <span class="string">"2.2.0"</span>,</span><br><span class="line">    <span class="attr">"karma-jasmine"</span>: <span class="string">"2.0.1"</span>,</span><br><span class="line">    <span class="attr">"karma-webpack"</span>: <span class="string">"3.0.5"</span>,</span><br><span class="line">    <span class="attr">"webpack"</span>: <span class="string">"4.30.0"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"src/main.js"</span>,</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"karma-webpack-babel-typescript-istanbul"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"node index.js"</span>,</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"karma start"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.0"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="Add-Babel-configuration"><a href="#Add-Babel-configuration" class="headerlink" title="Add Babel configuration"></a>Add Babel configuration</h3><p>We will start with a very basic Babel configuration which does not define any plugin our sets of plugins (called presets). Without plugins Babel won’t do much which is okay for now and will be changed once we add TypeScript to our Babel toolchain. </p>
 <figure class="highlight js"><figcaption><span>babel.config.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [],</span><br><span class="line">  presets: [],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -252,7 +252,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/04/29/8/" data-id="cjztzlovf004m5c9o7303fzq8" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/04/29/8/" data-id="ck1h0gt7c000iig9odl1d0k4e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel/">babel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coverage/">coverage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/karma/">karma</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/preprocessor/">preprocessor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -307,7 +307,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/04/26/7/" data-id="cjztzlosn000d5c9o246audkt" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/04/26/7/" data-id="ck1h0gt76000dig9oxju8oc17" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ECMAScript-2015/">ECMAScript 2015</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ECMAScript-6/">ECMAScript 6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ECMAScript-Harmony/">ECMAScript Harmony</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES2015/">ES2015</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/alias/">alias</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/resolve/">resolve</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/">webpack</a></li></ul>
@@ -384,7 +384,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/04/16/6/" data-id="cjztzlose00095c9otb5hp3q4" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/04/16/6/" data-id="ck1h0gt6z0009ig9owzmb8ybj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron/">electron</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/main/">main</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/process/">process</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/renderer/">renderer</a></li></ul>
@@ -456,7 +456,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/04/08/5/" data-id="cjztzlosj000a5c9oguo89v5q" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/04/08/5/" data-id="ck1h0gt74000aig9owtjeucqd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel/">babel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel-plugin-istanbul/">babel-plugin-istanbul</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coverage/">coverage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocha/">mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li></ul>
@@ -548,7 +548,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/03/19/4/" data-id="cjztzlosc00065c9oi07tdxqc" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/03/19/4/" data-id="ck1h0gt6v0006ig9ot6nbz9i7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cli/">cli</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/express/">express</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heroku/">heroku</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hosting/">hosting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paas/">paas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/setup/">setup</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tsc/">tsc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
@@ -607,7 +607,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/03/12/3/" data-id="cjztzlos700055c9o72bj9q4m" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/03/12/3/" data-id="ck1h0gt6t0005ig9oafb7suf0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/args/">args</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/argv/">argv</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cli/">cli</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libraries/">libraries</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -657,7 +657,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/02/20/2/" data-id="cjztzlos400035c9oj59ujcmb" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/02/20/2/" data-id="ck1h0gt6r0003ig9osd6uf79m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node-js/">Node.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TS2339/">TS2339</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coverage/">coverage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/global/">global</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/istanbul/">istanbul</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/namespace/">namespace</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/window/">window</a></li></ul>
@@ -721,7 +721,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/02/19/1/" data-id="cjztzlory00015c9od3you75j" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/02/19/1/" data-id="ck1h0gt6m0001ig9ozz1emsp9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TypeScript/">TypeScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel/">babel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron-mocha/">electron-mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mocha/">mocha</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/packages/">packages</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/preset-typescript/">preset-typescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tsc/">tsc</a></li></ul>

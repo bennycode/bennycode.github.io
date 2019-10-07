@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Benny&#39;s Blog">
 <meta property="og:description" content="Moment.js is a great choice if you want to work with dates and times in JavaScript. It is very handy for creating interchange representations like ISO 8601 strings, taking your current timezone into a">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-07-03T13:20:17.669Z">
+<meta property="og:updated_time" content="2019-10-07T22:51:54.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Get milliseconds of date in specific timezone">
 <meta name="twitter:description" content="Moment.js is a great choice if you want to work with dates and times in JavaScript. It is very handy for creating interchange representations like ISO 8601 strings, taking your current timezone into a">
@@ -102,13 +102,13 @@
 <p><strong>Detected Zone Info</strong></p>
 <figure class="highlight js"><figcaption><span>detected-zone-info.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> moment = <span class="built_in">require</span>(<span class="string">'moment-timezone'</span>);</span><br><span class="line"><span class="keyword">const</span> zoneInfo = moment.tz.guess();</span><br><span class="line"><span class="keyword">const</span> unixTimestamp = moment.tz(<span class="string">'2019-06-26 00:00:00'</span>, zoneInfo).valueOf();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'unixTimestamp'</span>, unixTimestamp); <span class="comment">// 1561500000000</span></span><br></pre></td></tr></table></figure>
 <p><strong>Pro Tip:</strong> You can get date and time expressed according to ISO 8601 in JavaScript from the current date when calling: </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>().toISOString(); <span class="comment">// 019-07-03T13:12:18.784Z</span></span><br></pre></td></tr></table></figure>
-<p>Note that the above string will always be normalized to UTC time (Z), so you need to apply the UTC offset yourself.</p>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>().toISOString(); <span class="comment">// "2019-07-03T13:12:18.784Z"</span></span><br></pre></td></tr></table></figure>
+<p>Note that the above string will always be normalized to UTC time (Z). To prevent UTC conversion you may call:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>().toISOString(<span class="literal">true</span>); <span class="comment">// "2019-07-03T15:12:18.784+02:00"</span></span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://benny.work/2019/07/03/9-moment-timezone/" data-id="cjztzlosp000f5c9otm32p8ed" class="article-share-link">Share</a>
+      <a data-url="https://benny.work/2019/07/03/9-moment-timezone/" data-id="ck1h0gt78000fig9olrakdgz1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CEST/">CEST</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GMT/">GMT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IANA/">IANA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UTC/">UTC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/moment/">moment</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/timezone/">timezone</a></li></ul>
