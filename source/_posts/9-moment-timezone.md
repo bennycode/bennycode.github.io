@@ -57,7 +57,11 @@ console.log('unixTimestamp', unixTimestamp); // 1561500000000
 **Pro Tip:** You can get date and time expressed according to ISO 8601 in JavaScript from the current date when calling: 
 
 ```js
-new Date().toISOString(); // 019-07-03T13:12:18.784Z
+new Date().toISOString(); // "2019-07-03T13:12:18.784Z"
 ```
 
-Note that the above string will always be normalized to UTC time (Z), so you need to apply the UTC offset yourself.
+Note that the above string will always be normalized to UTC time (Z). To prevent UTC conversion you may call:
+
+```js
+new Date().toISOString(true); // "2019-07-03T15:12:18.784+02:00"
+```
