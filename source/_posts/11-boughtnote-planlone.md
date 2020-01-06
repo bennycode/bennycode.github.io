@@ -1,5 +1,5 @@
 ---
-title: Virus: Boughtnote Planlone
+title: "Virus: Boughtnote Planlone"
 date: 2020/01/06 14:27:11
 categories:
   - [Windows, Security]
