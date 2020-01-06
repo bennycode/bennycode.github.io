@@ -24,4 +24,4 @@ Unfortunately Windows Defender did not detect this virus but here is how I got r
 3. I restarted Windows without safe mode and installed "ESET Internet Security"
 4. I scanned the file "C:\Users\bennyn\AppData\Roaming\Microsoft\Authoker\bderedDS.exe" with "ESET Internet Security" which ultimately deleted the virus
 
-In my case the virus executables have been named "BdeHkeDS.exe" and "bderedDS.exe". 
+In my case the virus executables have been named "BdeHkeDS.exe" and "bderedDS.exe". Those have been identified as "ML/Augur Trojan" threat.
